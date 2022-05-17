@@ -6,7 +6,6 @@ use Slim\Factory\AppFactory;
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../config/db.php';
 
-
 $app = AppFactory::create();
 
 $app->get('/', function (Request $request, Response $response) {
@@ -14,7 +13,13 @@ $app->get('/', function (Request $request, Response $response) {
     return $response;
 });
 
-//detailtransaksi
-require __DIR__ . '/../routes/user.php';
 
+//detailtransaksi
+// require __DIR__ . '/../routes/user.php';
+
+//jenisburung
+require __DIR__ . '/../routes/jenis_burung.php';
+
+//jenisburung
+require __DIR__ . '/../routes/lokasi.php';
 $app->run();
