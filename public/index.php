@@ -14,7 +14,4 @@ $app->get('/', function (Request $request, Response $response) {
     return $response;
 });
 
-//detailtransaksi
-require __DIR__ . '/../routes/user.php';
-
 $app->run();
