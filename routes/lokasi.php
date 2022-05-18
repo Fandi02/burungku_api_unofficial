@@ -63,7 +63,7 @@ $app->group('/lokasi', function(\Slim\Routing\RouteCollectorProxy $app){
 
   //route post by id
   $app->post('/add', function (Request $request, Response $response, array $args) {
-    $id = $request->getParam('id');;
+    $id = com_create_guid();
     $kota = $request->getParam('kota');
     $longitude = $request->getParam('longitude');
     $latitude = $request->getParam('latitude');
