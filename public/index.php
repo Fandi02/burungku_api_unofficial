@@ -20,6 +20,9 @@ require __DIR__ . '/../routes/jenis_burung.php';
 //Data_bank
 require __DIR__ . '/../routes/data_bank.php';
 
+//event
+require __DIR__ . '/../routes/event.php';
+
 //lokasi
 require __DIR__ . '/../routes/lokasi.php';
 
