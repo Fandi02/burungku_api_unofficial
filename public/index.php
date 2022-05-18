@@ -26,4 +26,7 @@ require __DIR__ . '/../routes/event.php';
 //lokasi
 require __DIR__ . '/../routes/lokasi.php';
 
+//lokasi
+require __DIR__ . '/../routes/transaksi.php';
+
 $app->run();
