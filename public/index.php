@@ -13,13 +13,7 @@ $app->get('/', function (Request $request, Response $response) {
     return $response;
 });
 
-
-//detailtransaksi
-// require __DIR__ . '/../routes/user.php';
-
 //jenisburung
 require __DIR__ . '/../routes/jenis_burung.php';
 
-//jenisburung
-require __DIR__ . '/../routes/lokasi.php';
 $app->run();
