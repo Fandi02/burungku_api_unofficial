@@ -16,4 +16,7 @@ $app->get('/', function (Request $request, Response $response) {
 //jenisburung
 require __DIR__ . '/../routes/jenis_burung.php';
 
+//Data_bank
+require __DIR__ . '/../routes/data_bank.php';
+
 $app->run();
