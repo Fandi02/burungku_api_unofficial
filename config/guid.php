@@ -17,5 +17,6 @@ function create_guid() { // Create GUID (Globally Unique Identifier)
                 substr($hash, 16, 4) . '-' .
                 substr($hash, 20, 12);
          return $guid;
+
     }
 //}

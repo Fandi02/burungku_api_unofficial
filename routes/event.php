@@ -2,21 +2,22 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+
 //grup route
-$app->group('/dataBank', function(\Slim\Routing\RouteCollectorProxy $app){
+$app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
   //route get
   $app->get('', function (Request $request, Response $response, $args) {
-      $sql = 'SELECT * FROM databank';
+      $sql = 'SELECT * FROM event';
 
       try {
           $db = new db();
           $db = $db->connect();
 
           $stmt = $db->query($sql);
-          $databank = $stmt->fetchAll(PDO::FETCH_OBJ);
+          $event = $stmt->fetchAll(PDO::FETCH_OBJ);
 
           $db = null;
-          $response->getBody()->write(json_encode($databank));
+          $response->getBody()->write(json_encode($event));
           return $response
               ->withHeader('content-type', 'application/json')
               ->withStatus(200);
@@ -35,17 +36,17 @@ $app->group('/dataBank', function(\Slim\Routing\RouteCollectorProxy $app){
   //route get by id
   $app->get('/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
-    $sql = "SELECT * FROM `databank` WHERE id = '$id'";
+    $sql = "SELECT * FROM `event` WHERE id = '$id'";
 
     try {
         $db = new db();
         $db = $db->connect();
 
         $stmt = $db->query($sql);
-        $databankid = $stmt->fetch(PDO::FETCH_OBJ);
+        $eventid = $stmt->fetch(PDO::FETCH_OBJ);
 
         $db = null;
-        $response->getBody()->write(json_encode($databankid));
+        $response->getBody()->write(json_encode($eventid));
         return $response
             ->withHeader('content-type', 'application/json')
             ->withStatus(200);
@@ -64,12 +65,18 @@ $app->group('/dataBank', function(\Slim\Routing\RouteCollectorProxy $app){
   //route post by id
   $app->post('/add', function (Request $request, Response $response, array $args) {
     $id = create_guid();
-    $nama = $request->getParam('nama');
-    $nomer_rekening = $request->getParam('nomer_rekening');
-    $nama_bank = $request->getParam('nama_bank');
+    $judul = $request->getParam('judul');
+    $deskripsi = $request->getParam('deskripsi');
+    $jadwal = $request->getParam('jadwal');
+    $jml_tiket = $request->getParam('jml_tiket');
+    $jml_sesi = $request->getParam('jml_sesi');
+    $harga_tiket = $request->getParam('harga_tiket');
+    $aturan = $request->getParam('aturan');
+    $jenisburung_id = $request->getParam('jenisburung_id');
+    $lokasi_id = $request->getParam('lokasi_id');
 
-    $sql = "INSERT INTO databank (id, nama, nomer_rekening, nama_bank) 
-            VALUES (:id, :nama, :nomer_rekening, :nama_bank)";
+    $sql = "INSERT INTO event (id, judul, deskripsi, jadwal, jml_tiket, jml_sesi, harga_tiket, aturan, jenisburung_id, lokasi_id) 
+    VALUES (:id, :judul, :deskripsi, :jadwal, :jml_tiket, :jml_sesi, :harga_tiket, :aturan, :jenisburung_id, :lokasi_id)";
 
     try {
         $db = new db();
@@ -77,9 +84,15 @@ $app->group('/dataBank', function(\Slim\Routing\RouteCollectorProxy $app){
 
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':nama', $nama);
-        $stmt->bindParam(':nomer_rekening', $nomer_rekening);
-        $stmt->bindParam(':nama_bank', $nama_bank);
+        $stmt->bindParam(':judul', $judul);
+        $stmt->bindParam(':deskripsi', $deskripsi);
+        $stmt->bindParam(':jadwal', $jadwal);
+        $stmt->bindParam(':jml_tiket', $jml_tiket);
+        $stmt->bindParam(':jml_sesi', $jml_sesi);
+        $stmt->bindParam(':harga_tiket', $harga_tiket);
+        $stmt->bindParam(':aturan', $aturan);
+        $stmt->bindParam(':jenisburung_id', $jenisburung_id);
+        $stmt->bindParam(':lokasi_id', $lokasi_id);
 
         $result = $stmt->execute();
 
@@ -104,7 +117,7 @@ $app->group('/dataBank', function(\Slim\Routing\RouteCollectorProxy $app){
   $app->delete('/delete/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
 
-    $sql = "DELETE FROM databank WHERE  `id` = '$id'";
+    $sql = "DELETE FROM event WHERE  `id` = '$id'";
 
     try {
         $db = new db();
@@ -136,14 +149,26 @@ $app->group('/dataBank', function(\Slim\Routing\RouteCollectorProxy $app){
     {
         $id = $request->getAttribute('id');
         $data = $request->getParsedBody();
-        $nama = $data["nama"];
-        $nomer_rekening = $data["nomer_rekening"];
-        $nama_bank = $data["nama_bank"];
+        $judul = $data["judul"];
+        $deskripsi = $data["deskripsi"];
+        $jadwal = $data["jadwal"];
+        $jml_tiket = $data["jml_tiket"];
+        $jml_sesi = $data["jml_sesi"];
+        $harga_tiket = $data["harga_tiket"];
+        $aturan = $data["aturan"];
+        $jenisburung_id = $data["jenisburung_id"];
+        $lokasi_id = $data["lokasi_id"];
 
-        $sql = "UPDATE databank SET
-            nama = '$nama',
-            nomer_rekening = '$nomer_rekening',
-            nama_bank = '$nama_bank'
+        $sql = "UPDATE event SET
+            judul = '$judul',
+            deskripsi = '$deskripsi',
+            jadwal = '$jadwal',
+            jml_tiket = '$jml_tiket',
+            jml_sesi = '$jml_sesi',
+            harga_tiket = '$harga_tiket',
+            aturan = '$aturan',
+            jenisburung_id = '$jenisburung_id',
+            lokasi_id = '$lokasi_id'
             WHERE id = '$id'";
 
         try {
@@ -152,7 +177,15 @@ $app->group('/dataBank', function(\Slim\Routing\RouteCollectorProxy $app){
     
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':id', $id);
-            $stmt->bindParam(':nama', $nama);
+            $stmt->bindParam(':judul', $judul);
+            $stmt->bindParam(':deskripsi', $deskripsi);
+            $stmt->bindParam(':jadwal', $jadwal);
+            $stmt->bindParam(':jml_tiket', $jml_tiket);
+            $stmt->bindParam(':jml_sesi', $jml_sesi);
+            $stmt->bindParam(':harga_tiket', $harga_tiket);
+            $stmt->bindParam(':aturan', $aturan);
+            $stmt->bindParam(':jenisburung_id', $jenisburung_id);
+            $stmt->bindParam(':lokasi_id', $lokasi_id);
 
             $result = $stmt->execute();
 
