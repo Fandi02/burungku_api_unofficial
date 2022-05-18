@@ -1,5 +1,6 @@
 <?php
 
+
 //class guid{
 function create_guid() { // Create GUID (Globally Unique Identifier)
          $guid = '';
