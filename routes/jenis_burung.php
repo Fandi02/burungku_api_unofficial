@@ -3,7 +3,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 //grup route
-$app->group('/jenis_burung', function(\Slim\Routing\RouteCollectorProxy $app){
+$app->group('/jenisburung', function(\Slim\Routing\RouteCollectorProxy $app){
   //route get
   $app->get('', function (Request $request, Response $response, $args) {
       $sql = 'SELECT * FROM jenisburung';
