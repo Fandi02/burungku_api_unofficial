@@ -26,6 +26,10 @@ require __DIR__ . '/../routes/event.php';
 //lokasi
 require __DIR__ . '/../routes/lokasi.php';
 
+
+//book tiket
+require __DIR__ . '/../routes/book_tiket.php';
+
 //transaksi
 require __DIR__ . '/../routes/transaksi.php';
 
