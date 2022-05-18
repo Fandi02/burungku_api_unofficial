@@ -131,6 +131,7 @@ $app->group('/jenis_burung', function(\Slim\Routing\RouteCollectorProxy $app){
   {
   $id = $request->getAttribute('id');
   $data = $request->getParsedBody();
+  $id = $data["id"];
   $nama = $data["nama"];
 
   $sql = "UPDATE jenisburung SET 
