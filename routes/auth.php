@@ -56,20 +56,41 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
         
         //login
         $app->post('/login', function (Request $request, Response $response, array $args) {
-            $body = $request->getParsedBody();
             $email = $request->getParam('email');
             $password = $request->getParam('password');
 
-            $data = $this->db->prepare("SELECT * FROM user WHERE email = '$email'");
+            $sql = "SELECT email, password FROM user 
+                WHERE email = :email AND password = :password AND role = 2";
 
-            if(count($data) > 0){
-                $response->getBody()->write(json_encode($data));
-                return $response
-                    ->withHeader('content-type', 'application/json')
-                    ->withStatus(200);
-            }else{
+            try{
+                $db = new db();
+                $db = $db->connect();
+
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(':email', $email);
+                $stmt->bindParam(':password', $password);
+
+                if(password_verify($password, $stmt->bindParam(':password', $password))){
+                    $result = $stmt->execute();
+                    $logineo = $stmt->fetch($result);
+                    $response->getBody()->write(json_encode($logineo));
+                    return $response
+                        ->withHeader('content-type', 'application/json')
+                        ->withStatus(200);
+                } else {
+                    $error = array(
+                        'Message' => 'Password salah'
+                    );
+
+                    $response->getBody()->write(json_encode($error));
+                    return $response
+                        ->withHeader('content-type', 'application/json')
+                        ->withStatus(500);
+                }
+
+            } catch(PDOException $e) {
                 $error = array(
-                    'Message' => 'Email atau Password salah'
+                    'Message' => $e->getMessage()
                 );
 
                 $response->getBody()->write(json_encode($error));
@@ -114,6 +135,52 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
                 return $response
                     ->withHeader('content-type', 'application/json')
                     ->withStatus(200);
+            } catch(PDOException $e) {
+                $error = array(
+                    'Message' => $e->getMessage()
+                );
+
+                $response->getBody()->write(json_encode($error));
+                return $response
+                    ->withHeader('content-type', 'application/json')
+                    ->withStatus(500);
+            }
+        });
+
+        //login
+        $app->post('/login', function (Request $request, Response $response, array $args) {
+            $email = $request->getParam('email');
+            $password = $request->getParam('password');
+
+            $sql = "SELECT email, password FROM user 
+                WHERE email = :email AND password = :password AND role = 3";
+
+            try{
+                $db = new db();
+                $db = $db->connect();
+
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(':email', $email);
+                $stmt->bindParam(':password', $password);
+
+                if(password_verify($password, $stmt->bindParam(':password', $password))){
+                    $result = $stmt->execute();
+                    $loginuser = $stmt->fetch($result);
+                    $response->getBody()->write(json_encode($loginuser));
+                    return $response
+                        ->withHeader('content-type', 'application/json')
+                        ->withStatus(200);
+                } else {
+                    $error = array(
+                        'Message' => 'Password salah'
+                    );
+
+                    $response->getBody()->write(json_encode($error));
+                    return $response
+                        ->withHeader('content-type', 'application/json')
+                        ->withStatus(500);
+                }
+
             } catch(PDOException $e) {
                 $error = array(
                     'Message' => $e->getMessage()
