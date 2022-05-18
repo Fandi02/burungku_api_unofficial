@@ -2,21 +2,22 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
+
 //grup route
-$app->group('/jenisBurung', function(\Slim\Routing\RouteCollectorProxy $app){
+$app->group('/lokasi', function(\Slim\Routing\RouteCollectorProxy $app){
   //route get
   $app->get('', function (Request $request, Response $response, $args) {
-      $sql = 'SELECT * FROM jenisburung';
+      $sql = 'SELECT * FROM lokasi';
 
       try {
           $db = new db();
           $db = $db->connect();
 
           $stmt = $db->query($sql);
-          $jenisburung = $stmt->fetchAll(PDO::FETCH_OBJ);
+          $databank = $stmt->fetchAll(PDO::FETCH_OBJ);
 
           $db = null;
-          $response->getBody()->write(json_encode($jenisburung));
+          $response->getBody()->write(json_encode($databank));
           return $response
               ->withHeader('content-type', 'application/json')
               ->withStatus(200);
@@ -35,17 +36,17 @@ $app->group('/jenisBurung', function(\Slim\Routing\RouteCollectorProxy $app){
   //route get by id
   $app->get('/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
-    $sql = "SELECT * FROM `jenisburung` WHERE id = $id";
+    $sql = "SELECT * FROM `lokasi` WHERE id = '$id'";
 
     try {
         $db = new db();
         $db = $db->connect();
 
         $stmt = $db->query($sql);
-        $jenisburungid = $stmt->fetch(PDO::FETCH_OBJ);
+        $databankid = $stmt->fetch(PDO::FETCH_OBJ);
 
         $db = null;
-        $response->getBody()->write(json_encode($jenisburungid));
+        $response->getBody()->write(json_encode($databankid));
         return $response
             ->withHeader('content-type', 'application/json')
             ->withStatus(200);
@@ -63,10 +64,13 @@ $app->group('/jenisBurung', function(\Slim\Routing\RouteCollectorProxy $app){
 
   //route post by id
   $app->post('/add', function (Request $request, Response $response, array $args) {
-    $id = $request->getParam('id');
-    $nama = $request->getParam('nama');
+    $id = create_guid();
+    $kota = $request->getParam('kota');
+    $longitude = $request->getParam('longitude');
+    $latitude = $request->getParam('latitude');
 
-    $sql = "INSERT INTO jenisburung (id, nama) VALUES (:id, :nama)";
+    $sql = "INSERT INTO lokasi (id, kota, longitude, latitude) 
+            VALUES (:id, :kota, :longitude, :latitude)";
 
     try {
         $db = new db();
@@ -74,7 +78,9 @@ $app->group('/jenisBurung', function(\Slim\Routing\RouteCollectorProxy $app){
 
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':nama', $nama);
+        $stmt->bindParam(':kota', $kota);
+        $stmt->bindParam(':longitude', $longitude);
+        $stmt->bindParam(':latitude', $latitude);
 
         $result = $stmt->execute();
 
@@ -99,7 +105,7 @@ $app->group('/jenisBurung', function(\Slim\Routing\RouteCollectorProxy $app){
   $app->delete('/delete/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
 
-    $sql = "DELETE FROM jenisburung WHERE  `id` = $id";
+    $sql = "DELETE FROM lokasi WHERE  `id` = '$id'";
 
     try {
         $db = new db();
@@ -128,42 +134,46 @@ $app->group('/jenisBurung', function(\Slim\Routing\RouteCollectorProxy $app){
 
   //route update by id   
     $app->put('/update/{id}',function (Request $request, Response $response, array $args) 
-  {
-  $id = $request->getAttribute('id');
-  $data = $request->getParsedBody();
-  $id = $data["id"];
-  $nama = $data["nama"];
+    {
+        $id = $request->getAttribute('id');
+        $data = $request->getParsedBody();
+        $kota = $data["kota"];
+        $longitude = $data["longitude"];
+        $latitude = $data["latitude"];
 
-  $sql = "UPDATE jenisburung SET 
-            id = '$id',
-            nama = '$nama'
-  WHERE id = $id";
+        $sql = "UPDATE lokasi SET
+            kota = '$kota',
+            longitude = '$longitude',
+            latitude = '$latitude'
+            WHERE id = '$id'";
 
-  try {
-    $db = new Db();
-    $conn = $db->connect();
+        try {
+            $db = new Db();
+            $conn = $db->connect();
     
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':id', $id);
-    $stmt->bindParam(':nama', $nama);
+            $stmt = $conn->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':kota', $kota);
+            $stmt->bindParam(':longitude', $longitude);
+            $stmt->bindParam(':latitude', $latitude);
 
-    $result = $stmt->execute();
+            $result = $stmt->execute();
 
-    $db = null;
-    echo "Update successful! ";
-    $response->getBody()->write(json_encode($result));
-    return $response
-      ->withHeader('content-type', 'application/json')
-      ->withStatus(200);
-  } catch (PDOException $e) {
-    $error = array(
-      "message" => $e->getMessage()
-    );
+            $db = null;
+            echo "Update successful! ";
+            $response->getBody()->write(json_encode($result));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(200);
+        } catch (PDOException $e) {
+            $error = array(
+            "message" => $e->getMessage()
+        );
 
-    $response->getBody()->write(json_encode($error));
-    return $response
-      ->withHeader('content-type', 'application/json')
-      ->withStatus(500);
-  }
-  }); 
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+        }
+    }); 
 });
