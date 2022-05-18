@@ -13,10 +13,10 @@ $app->get('/', function (Request $request, Response $response) {
     return $response;
 });
 
-
 //jenisburung
 require __DIR__ . '/../routes/jenis_burung.php';
 
-//jenisburung
-require __DIR__ . '/../routes/lokasi.php';
+//Data_bank
+require __DIR__ . '/../routes/data_bank.php';
+
 $app->run();
