@@ -36,4 +36,7 @@ require __DIR__ . '/../routes/transaksi.php';
 //peserta
 require __DIR__ . '/../routes/peserta.php';
 
+//alamat
+require __DIR__ . '/../routes/alamat.php';
+
 $app->run();
