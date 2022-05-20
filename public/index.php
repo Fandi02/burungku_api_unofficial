@@ -42,4 +42,7 @@ require __DIR__ . '/../routes/alamat.php';
 //profil
 require __DIR__ . '/../routes/profil.php';
 
+//Jenis Lomba
+require __DIR__ . '/../routes/jenis_lomba.php';
+
 $app->run();
