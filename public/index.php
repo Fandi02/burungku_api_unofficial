@@ -51,4 +51,7 @@ require __DIR__ . '/../routes/profil.php';
 //auth
 require __DIR__ . '/../routes/auth.php';
 
+//Jenis Lomba
+require __DIR__ . '/../routes/jenis_lomba.php';
+
 $app->run();
