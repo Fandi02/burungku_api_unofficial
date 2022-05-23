@@ -1,6 +1,6 @@
 run
 
-php -S localhost:8080 -t public public/index.php
+php -S localhost:5000 -t public public/index.php
 
 =======================================================
 List task dari kang helmi :

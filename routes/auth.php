@@ -170,6 +170,7 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
 
         $app->post('/google', function (Request $request, Response $response, array $args) {
             $id = create_guid();
+            $token = create_guid();
             $nama = $request->getParam('nama');
             $email = $request->getParam('email');
             $role = 3;
@@ -189,6 +190,8 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
                 $sql = "INSERT INTO user (id, nama, email, otp, role, is_verified) 
                     VALUES (:id, :nama, :email, :otp, :role, :is_verified)";
 
+                $creteToken = "INSERT INTO token (token, user_id) VALUES (:token :user_id)";
+
                 $stmt = $db->prepare($sql);
                 $stmt->bindParam(':id', $id);
                 $stmt->bindParam(':nama', $nama);
@@ -199,8 +202,16 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
 
                 $result = $stmt->execute();
 
+                $creteToken = "INSERT INTO usersecret (token, user_id) VALUES ('$token', '$id')";
+
+                //$stmt = $db->prepare($sql);
+                //$stmt->bindParam(':token', $token);
+                //$stmt->bindParam(':user_id', $id);
+
+                $tokenresult = $stmt->execute();
+
                 $db = null;
-                $response->getBody()->write(json_encode($result));
+
                 // email
                 $mail = new PHPMailer(true);
                 $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
@@ -221,6 +232,7 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
                 $mail->AltBody = 'Kode otp';
                 $mail->send();
 
+                $response->getBody()->write(json_encode($result, $tokenresult));
                 return $response
                     ->withHeader('content-type', 'application/json')
                     ->withStatus(200);
@@ -234,6 +246,7 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
                     ->withHeader('content-type', 'application/json')
                     ->withStatus(500);
                 }
+
             }else{
                 $error = array(
                 'Message' => 'Email sudah terdaftar'
@@ -328,8 +341,11 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
 
     $app->get('/login', function (Request $request, Response $response, array $args) {
         $email = $request->getParam('email');
+        $token = create_guid();
 
         $sql = "SELECT * FROM user WHERE email = '$email' AND is_verified = 1 AND role = 3";
+
+        $userID = "SELECT id FROM user WHERE email = '$email' AND is_verified = 1 AND role = 3";
 
         try {
             $db = new db();
@@ -337,6 +353,15 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
 
             $stmt = $db->query($sql);
             $loginid = $stmt->fetch(PDO::FETCH_OBJ);
+
+            $stmt_user = $db->query($userID);
+            $user = $stmt_user->fetch(PDO::FETCH_OBJ);
+
+            $creteToken = "INSERT INTO usersecret (token, user_id) VALUES (:token, :user_id)";
+            $stmt_token = $db->prepare($creteToken);
+            $stmt_token->bindParam(':token', $token);
+            $stmt_token->bindParam(':user_id', $user->id);
+            $token = $stmt_token->execute();
 
             $db = null;
             $response->getBody()->write(json_encode($loginid));
