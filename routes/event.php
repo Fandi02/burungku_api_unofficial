@@ -8,7 +8,7 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
   //route get
   $app->get('', function (Request $request, Response $response, $args) {
       $sql = 'SELECT * FROM event';
-
+        
       try {
           $db = new db();
           $db = $db->connect();
