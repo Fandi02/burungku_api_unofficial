@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2022 at 09:32 AM
+-- Generation Time: May 23, 2022 at 10:34 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -101,7 +101,8 @@ CREATE TABLE `event` (
 --
 
 INSERT INTO `event` (`id`, `judul`, `deskripsi`, `jadwal`, `jml_tiket`, `jml_sesi`, `harga_tiket`, `aturan`, `jenisburung_id`, `lokasi_id`, `jenislomba_id`) VALUES
-('25bd3c05-180e-42f7-80ac-e528b86dbb23', 'kontes burungku', 'burung', '2022-05-21 14:01:31.000000', 20, 1, 2000, 'tidak ada', 234224, 'db99a49b-78fe-40a6-9efa-591ffcaf13a5', 2);
+('25bd3c05-180e-42f7-80ac-e528b86dbb23', 'kontes burungku', 'burung', '2022-05-21 14:01:31.000000', 20, 1, 2000, 'tidak ada', 234224, 'db99a49b-78fe-40a6-9efa-591ffcaf13a5', 2),
+('7524CCE6-3B84-DD7F-1101-833AECC5BBCC', 'kontes burungmu', 'burung', '2022-05-21 14:01:31.000000', 20, 1, 2000, 'tidak ada', 234224, 'db99a49b-78fe-40a6-9efa-591ffcaf13a5', 2);
 
 -- --------------------------------------------------------
 
@@ -243,7 +244,8 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (`id`, `nama`) VALUES
-(1, 'user');
+(1, 'user'),
+(2, 'EO');
 
 -- --------------------------------------------------------
 
@@ -302,7 +304,21 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `nama`, `email`, `password`, `no_hp`, `role`, `otp`, `is_verified`) VALUES
-('25bd3c05-180e-42f7-80ac-e528b86dbb23', 'aku', 'fandi', 'aku@gmail.com', '123', '0812', 1, 0, 0);
+('0512FBFC-F040-8600-C772-ADA66BEB29CC', '', 'Fandi Maulana', 'fandimaulana125@gmail.com', '', '', 2, 29015, 1),
+('05DAE926-F20A-3FDA-4ED5-F95C2F68F245', 'saya', 'Fandi Maulana', 'fandimaulana125@gmail.com', 'password', '081293', 2, 19142, 0),
+('25bd3c05-180e-42f7-80ac-e528b86dbb23', 'aku', 'fandi', 'aku@gmail.com', '123', '0812', 1, 0, 0),
+('4F3845E1-C9B3-F431-3067-BA4BB47F6EA9', '', 'Maulana', 'fandimaulana125@gmail.com', '', '', 2, 81147, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usersecret`
+--
+
+CREATE TABLE `usersecret` (
+  `token` char(36) NOT NULL,
+  `user_id` char(36) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -420,6 +436,13 @@ ALTER TABLE `user`
   ADD KEY `role` (`role`);
 
 --
+-- Indexes for table `usersecret`
+--
+ALTER TABLE `usersecret`
+  ADD PRIMARY KEY (`token`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `verifikasi`
 --
 ALTER TABLE `verifikasi`
@@ -506,6 +529,12 @@ ALTER TABLE `transaksi`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role`) REFERENCES `role` (`id`);
+
+--
+-- Constraints for table `usersecret`
+--
+ALTER TABLE `usersecret`
+  ADD CONSTRAINT `usersecret_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

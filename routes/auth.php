@@ -53,6 +53,7 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
     });
 
     $app->group('/eo', function(\Slim\Routing\RouteCollectorProxy $app){
+
     //register
     $app->post('/register', function (Request $request, Response $response, array $args) {
         $id = create_guid();
