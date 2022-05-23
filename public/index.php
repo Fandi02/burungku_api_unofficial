@@ -16,10 +16,6 @@ $app->get('/', function (Request $request, Response $response) {
     return $response;
 });
 
-$app->get('/kirim', function (Request $request, Response $response) {
-
-});
-
 //jenisburung
 require __DIR__ . '/../routes/jenis_burung.php';
 
@@ -31,7 +27,6 @@ require __DIR__ . '/../routes/event.php';
 
 //lokasi
 require __DIR__ . '/../routes/lokasi.php';
-
 
 //book tiket
 require __DIR__ . '/../routes/book_tiket.php';
