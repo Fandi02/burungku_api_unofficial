@@ -364,7 +364,7 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
             $token = $stmt_token->execute();
 
             $db = null;
-            $response->getBody()->write(json_encode($loginid));
+            $response->getBody()->write(json_encode($loginid, $token));
             return $response
                 ->withHeader('content-type', 'application/json')
                 ->withStatus(200);
