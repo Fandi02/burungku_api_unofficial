@@ -1,7 +1,9 @@
 <?php
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\RequestHandlerInterface as Handler;
 
+//require __DIR__ . '/../middleware/middleware.php';
 
 //grup route
 $app->group('/dataBank', function(\Slim\Routing\RouteCollectorProxy $app){

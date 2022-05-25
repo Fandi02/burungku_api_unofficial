@@ -3,7 +3,7 @@
 class DB{
     private $host = 'localhost';
     private $user = 'root';
-    private $pass = '32147';
+    private $pass = '';
     private $dbname = 'kontes_burung';
 
     public function connect(){

@@ -8,13 +8,14 @@ require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../config/db.php';
 require __DIR__ . '/../config/guid.php';
 require __DIR__ . '/../config/otp.php';
+require __DIR__ . '/../middleware/middleware.php';
 
 $app = AppFactory::create();
 
 $app->get('/', function (Request $request, Response $response) {
     $response->getBody()->write('Hello world!');
     return $response;
-});
+})->add(new ExampleMiddleware());
 
 //jenisburung
 require __DIR__ . '/../routes/jenis_burung.php';
@@ -49,12 +50,14 @@ require __DIR__ . '/../routes/auth.php';
 //Jenis Lomba
 require __DIR__ . '/../routes/jenis_lomba.php';
 
-$app->add(function ($req, $res, $next) {
-    $response = $next($req, $res);
-    return $response
-            ->withHeader('Access-Control-Allow-Origin', 'http://localhost:5000')
-            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-});
+
+//fungsi CORS
+// $app->add(function ($req, $res, $next) {
+//     $response = $next($req, $res);
+//     return $response
+//             ->withHeader('Access-Control-Allow-Origin', 'http://localhost:5000')
+//             ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+//             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+// });
 
 $app->run();

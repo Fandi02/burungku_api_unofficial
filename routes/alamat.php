@@ -14,13 +14,11 @@ $app->group('/alamat', function(\Slim\Routing\RouteCollectorProxy $app){
           $db = $db->connect();
 
           $stmt = $db->query($sql);
-          $transaksi = $stmt->fetchAll(PDO::FETCH_OBJ);
+          $alamat = $stmt->fetchAll(PDO::FETCH_OBJ);
 
           $db = null;
-          $response->getBody()->write(json_encode($transaksi));
-          return $response
-              ->withHeader('content-type', 'application/json')
-              ->withStatus(200);
+          return $response->withJson(["status" => "success", "data" => $alamat], 200);
+
       } catch(PDOException $e) {
           $error = array(
               'Message' => $e->getMessage()
@@ -85,12 +83,10 @@ $app->group('/alamat', function(\Slim\Routing\RouteCollectorProxy $app){
         $stmt->bindParam(':provinsi', $provinsi);
         
         $result = $stmt->execute();
-
         $db = null;
-        $response->getBody()->write(json_encode($result));
-        return $response
-            ->withHeader('content-type', 'application/json')
-            ->withStatus(200);
+
+        return $response->withJson(["status" => "success", "data" => $result], 200);
+
     } catch(PDOException $e) {
         $error = array(
             'Message' => $e->getMessage()

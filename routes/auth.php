@@ -181,8 +181,8 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
 
             $db = new db();
             $db = $db->connect();
-            $stmt = $db->query($cek);
-            $cek_email = $stmt->fetch(PDO::FETCH_OBJ);
+            $stmt_cek = $db->query($cek);
+            $cek_email = $stmt_cek->fetch(PDO::FETCH_OBJ);
 
             if($cek_email == null){
             try {
@@ -190,7 +190,7 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
                 $sql = "INSERT INTO user (id, nama, email, otp, role, is_verified) 
                     VALUES (:id, :nama, :email, :otp, :role, :is_verified)";
 
-                $creteToken = "INSERT INTO token (token, user_id) VALUES (:token :user_id)";
+                $creteToken = "INSERT INTO usersecret (token, user_id) VALUES ('$token', '$id')";
 
                 $stmt = $db->prepare($sql);
                 $stmt->bindParam(':id', $id);
@@ -202,13 +202,13 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
 
                 $result = $stmt->execute();
 
-                $creteToken = "INSERT INTO usersecret (token, user_id) VALUES ('$token', '$id')";
+                // $creteToken = "INSERT INTO usersecret (token, user_id) VALUES ('$token', '$id')";
 
-                //$stmt = $db->prepare($sql);
-                //$stmt->bindParam(':token', $token);
-                //$stmt->bindParam(':user_id', $id);
+                // $stmt_token = $db->prepare($sql);
+                // $stmt_token->bindParam(':token', $token);
+                // $stmt_token->bindParam(':user_id', $id);
 
-                $tokenresult = $stmt->execute();
+                // $tokenresult = $stmt_token->execute();
 
                 $db = null;
 
@@ -236,6 +236,7 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
                 return $response
                     ->withHeader('content-type', 'application/json')
                     ->withStatus(200);
+
             } catch(PDOException $e) {
                 $error = array(
                     'Message' => $e->getMessage()
@@ -358,13 +359,14 @@ $app->group('/auth', function(\Slim\Routing\RouteCollectorProxy $app){
             $user = $stmt_user->fetch(PDO::FETCH_OBJ);
 
             $creteToken = "INSERT INTO usersecret (token, user_id) VALUES (:token, :user_id)";
+
             $stmt_token = $db->prepare($creteToken);
             $stmt_token->bindParam(':token', $token);
             $stmt_token->bindParam(':user_id', $user->id);
             $token = $stmt_token->execute();
 
             $db = null;
-            $response->getBody()->write(json_encode($loginid, $token));
+            $response->getBody()->write(json_encode($token));
             return $response
                 ->withHeader('content-type', 'application/json')
                 ->withStatus(200);

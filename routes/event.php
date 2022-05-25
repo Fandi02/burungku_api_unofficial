@@ -75,7 +75,7 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
     $harga_tiket = $request->getParam('harga_tiket');
     $aturan = $request->getParam('aturan');
     $jenisburung_id = $request->getParam('jenisburung_id');
-    $kota = $request->getParam('lokasi');
+    $kota = $request->getParam('kota');
     $jenislomba_id = $request->getParam('jenislomba_id');
     $jml_kol = $request->getParam('jml_kol');
     $jml_baris = $request->getParam('jml_baris');
@@ -110,7 +110,7 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
         $stmt2->bindParam(':kota', $kota);
         $stmt2->bindParam(':event_id', $id);
 
-        $result2 = $stmt2->execute();
+        //$result2 = $stmt2->execute();
         $result = $stmt->execute();
 
         $db = null;
@@ -118,6 +118,8 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
         return $response
             ->withHeader('content-type', 'application/json')
             ->withStatus(200);
+
+            
     } catch(PDOException $e) {
         $error = array(
             'Message' => $e->getMessage()
