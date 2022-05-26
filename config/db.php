@@ -3,8 +3,8 @@
 class DB{
     private $host = 'localhost';
     private $user = 'root';
-    private $pass = '32147';
-    private $dbname = 'kontes_burung';
+    private $pass = '';
+    private $dbname = 'burung';
 
     public function connect(){
         $dsn = 'mysql:host='.$this->host.';dbname='.$this->dbname;

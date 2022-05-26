@@ -63,7 +63,7 @@ $app->group('/jenisBurung', function(\Slim\Routing\RouteCollectorProxy $app){
 
   //route post by id
   $app->post('/add', function (Request $request, Response $response, array $args) {
-    $id = $request->getParam('id');
+    $id = create_guid();
     $nama = $request->getParam('nama');
 
     $sql = "INSERT INTO jenisburung (id, nama) VALUES (:id, :nama)";
@@ -127,19 +127,18 @@ $app->group('/jenisBurung', function(\Slim\Routing\RouteCollectorProxy $app){
   });
 
   //route update by id   
-    $app->put('/update/{id}',function (Request $request, Response $response, array $args) 
-  {
-  $id = $request->getAttribute('id');
-  $data = $request->getParsedBody();
-  $id = $data["id"];
-  $nama = $data["nama"];
+  $app->put('/update/{id}',function (Request $request, Response $response, array $args) {
+    $id = $request->getAttribute('id');
+    $data = $request->getParsedBody();
+    $id = $data["id"];
+    $nama = $data["nama"];
 
-  $sql = "UPDATE jenisburung SET 
+    $sql = "UPDATE jenisburung SET 
             id = '$id',
             nama = '$nama'
-  WHERE id = $id";
+    WHERE id = $id";
 
-  try {
+    try {
     $db = new Db();
     $conn = $db->connect();
     
@@ -155,7 +154,7 @@ $app->group('/jenisBurung', function(\Slim\Routing\RouteCollectorProxy $app){
     return $response
       ->withHeader('content-type', 'application/json')
       ->withStatus(200);
-  } catch (PDOException $e) {
+    } catch (PDOException $e) {
     $error = array(
       "message" => $e->getMessage()
     );
@@ -164,6 +163,6 @@ $app->group('/jenisBurung', function(\Slim\Routing\RouteCollectorProxy $app){
     return $response
       ->withHeader('content-type', 'application/json')
       ->withStatus(500);
-  }
+    }
   }); 
 });
