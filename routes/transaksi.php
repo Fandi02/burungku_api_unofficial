@@ -33,6 +33,37 @@ $app->group('/transaksi', function(\Slim\Routing\RouteCollectorProxy $app){
       }
   });
 
+    //route by user
+    $app->get('/user/{id}', function (Request $request, Response $response, array $args) {
+        $id = $args['id'];
+        $sql = "SELECT * FROM transaksi
+                JOIN user ON transaksi.user_id = user.id
+                WHERE user.id = '$id'";
+  
+        try {
+            $db = new db();
+            $db = $db->connect();
+  
+            $stmt = $db->query($sql);
+            $transaksi = $stmt->fetchAll(PDO::FETCH_OBJ);
+  
+            $db = null;
+            $response->getBody()->write(json_encode($transaksi));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } catch(PDOException $e) {
+            $error = array(
+                'Message' => $e->getMessage()
+            );
+  
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(500);
+        }
+    });
+
   //route get by id
   $app->get('/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
@@ -69,11 +100,11 @@ $app->group('/transaksi', function(\Slim\Routing\RouteCollectorProxy $app){
     $event_id = $request->getParam('event_id');
     $sesi = $request->getParam('sesi');
     $no_kursi = $request->getParam('no_kursi');
-    $booktiket_id = $request->getParam('booktiket_id');
-    $bukti_pembayaran = $request->getParam('bukti_pembayaran');
+    $metode_pembayaran = $request->getParam('metode_pembayaran');
+    $status = 1;
 
-    $sql = "INSERT INTO transaksi (id, user_id, event_id, sesi, no_kursi, booktiket_id, bukti_pembayaran) 
-            VALUES (:id, :user_id, :event_id, :sesi, :no_kursi, :booktiket_id, :bukti_pembayaran)";
+    $sql = "INSERT INTO transaksi (id, user_id, event_id, sesi, no_kursi, metode_pembayaran, status) 
+            VALUES (:id, :user_id, :event_id, :sesi, :no_kursi, :metode_pembayaran, :status)";
 
     try {
         $db = new db();
@@ -85,8 +116,8 @@ $app->group('/transaksi', function(\Slim\Routing\RouteCollectorProxy $app){
         $stmt->bindParam(':event_id', $event_id);
         $stmt->bindParam(':sesi', $sesi);
         $stmt->bindParam(':no_kursi', $no_kursi);
-        $stmt->bindParam(':booktiket_id', $booktiket_id);
-        $stmt->bindParam(':bukti_pembayaran', $bukti_pembayaran);
+        $stmt->bindParam(':metode_pembayaran', $metode_pembayaran);
+        $stmt->bindParam(':status', $status);
         
         $result = $stmt->execute();
 

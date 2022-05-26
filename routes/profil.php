@@ -6,8 +6,9 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 //grup route
 $app->group('/profil', function(\Slim\Routing\RouteCollectorProxy $app){
   //route get
-  $app->get('', function (Request $request, Response $response, $args) {
-      $sql = 'SELECT * FROM profil';
+    $app->get('', function (Request $request, Response $response, $args) {
+      $sql = 'SELECT * FROM profile 
+            join user on profile.user_id = user.id';
 
       try {
           $db = new db();
@@ -31,14 +32,44 @@ $app->group('/profil', function(\Slim\Routing\RouteCollectorProxy $app){
               ->withHeader('content-type', 'application/json')
               ->withStatus(500);
       }
-  });
+    });
 
-  //route get by id
-  $app->get('/{id}', function (Request $request, Response $response, array $args) {
-    $id = $args['id'];
-    $sql = "SELECT * FROM `profil` WHERE id = '$id'";
+    //route by eo
+    $app->get('/eo', function (Request $request, Response $response, $args) {
+        $sql = "SELECT * FROM `profile` 
+                join user ON profile.user_id = user.id
+                WHERE user.role = 2";
+    
+        try {
+            $db = new db();
+            $db = $db->connect();
+    
+            $stmt = $db->query($sql);
+            $databankid = $stmt->fetch(PDO::FETCH_OBJ);
+    
+            $db = null;
+            $response->getBody()->write(json_encode($databankid));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } catch(PDOException $e) {
+            $error = array(
+                'Message' => $e->getMessage()
+            );
+    
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(500);
+        }
+    });
 
-    try {
+    //route get by id
+    $app->get('/{id}', function (Request $request, Response $response, array $args) {
+        $id = $args['id'];
+        $sql = "SELECT * FROM `profile` WHERE id = '$id'";
+
+        try {
         $db = new db();
         $db = $db->connect();
 
@@ -50,7 +81,7 @@ $app->group('/profil', function(\Slim\Routing\RouteCollectorProxy $app){
         return $response
             ->withHeader('content-type', 'application/json')
             ->withStatus(200);
-    } catch(PDOException $e) {
+        } catch(PDOException $e) {
         $error = array(
             'Message' => $e->getMessage()
         );
@@ -59,61 +90,16 @@ $app->group('/profil', function(\Slim\Routing\RouteCollectorProxy $app){
         return $response
             ->withHeader('content-type', 'application/json')
             ->withStatus(500);
-    }
-  });
+        }
+    });
 
- //route post by id
- $app->post('/add', function (Request $request, Response $response, array $args) {
-    $id = create_guid();
-    $nama = $request->getParam('nama');
-    $user_id = $request->getParam('user_id');
-    $email = $request->getParam('email');
-    $jkel = $request->getParam('jkel');
-    $no_telp = $request->getParam('no_telp');
-    $alamat_id = $request->getParam('alamat_id');
+    //route delete by id
+    $app->delete('/delete/{id}', function (Request $request, Response $response, array $args) {
+        $id = $args['id'];
 
-    $sql = "INSERT INTO profil (id, nama, user_id, email, jkel, no_telp, alamat_id)
-            VALUES (:id, :nama, :user_id, :email, :jkel, :no_telp, :alamat_id)";
+        $sql = "DELETE FROM profile WHERE  `id` = '$id'";
 
-    try {
-        $db = new db();
-        $db = $db->connect();
-
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':nama', $nama);
-        $stmt->bindParam(':user_id', $user_id);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':jkel', $jkel);
-        $stmt->bindParam(':no_telp', $no_telp);
-        $stmt->bindParam(':alamat_id', $alamat_id);
-        
-        $result = $stmt->execute();
-
-        $db = null;
-        $response->getBody()->write(json_encode($result));
-        return $response
-            ->withHeader('content-type', 'application/json')
-            ->withStatus(200);
-    } catch(PDOException $e) {
-        $error = array(
-            'Message' => $e->getMessage()
-        );
-
-        $response->getBody()->write(json_encode($error));
-        return $response
-            ->withHeader('content-type', 'application/json')
-            ->withStatus(500);
-    }
-  });
-
-  //route delete by id
-  $app->delete('/delete/{id}', function (Request $request, Response $response, array $args) {
-    $id = $args['id'];
-
-    $sql = "DELETE FROM profil WHERE  `id` = '$id'";
-
-    try {
+        try {
         $db = new db();
         $db = $db->connect();
 
@@ -126,7 +112,7 @@ $app->group('/profil', function(\Slim\Routing\RouteCollectorProxy $app){
         return $response
             ->withHeader('content-type', 'application/json')
             ->withStatus(200);
-    } catch(PDOException $e) {
+        } catch(PDOException $e) {
         $error = array(
             'Message' => $e->getMessage()
         );
@@ -135,29 +121,20 @@ $app->group('/profil', function(\Slim\Routing\RouteCollectorProxy $app){
         return $response
             ->withHeader('content-type', 'application/json')
             ->withStatus(500);
-    }
-  });
+        }
+    });
 
-  //route update by id   
-    $app->put('/update/{id}',function (Request $request, Response $response, array $args) 
-    {
+    //route update by id   
+    $app->put('/update/{id}',function (Request $request, Response $response, array $args) {
         $id = $request->getAttribute('id');
-        $data = $request->getParsedBody();
-        $nama = $data["nama"];
-        $user_id = $data["user_id"];
-        $email = $data["email"];
-        $jkel = $data["jkel"];
-        $no_telp = $data["no_telp"];
-        $alamat_id = $data["alamat_id"];
-        
+        $jkel = $request->getParam('jkel');
+        $no_hp = $request->getParam('no_hp');
+        $alamat = $request->getParam('alamat');
 
-        $sql = "UPDATE profil SET
-            nama = '$nama',
-            user_id = '$user_id',
-            email = '$email',
+        $sql = "UPDATE profile SET
             jkel = '$jkel',
-            no_telp = '$no_telp',
-            alamat_id = '$alamat_id'
+            no_hp = '$no_hp',
+            alamat = '$alamat'
         WHERE id = '$id'";
 
         try {
@@ -165,13 +142,9 @@ $app->group('/profil', function(\Slim\Routing\RouteCollectorProxy $app){
             $conn = $db->connect();
     
             $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            $stmt->bindParam(':nama', $nama);
-            $stmt->bindParam(':user_id', $user_id);
-            $stmt->bindParam(':email', $email);
             $stmt->bindParam(':jkel', $jkel);
-            $stmt->bindParam(':no_telp', $no_telp);
-            $stmt->bindParam(':alamat_id', $alamat_id);
+            $stmt->bindParam(':no_hp', $no_hp);
+            $stmt->bindParam(':alamat', $alamat);
 
             $result = $stmt->execute();
 

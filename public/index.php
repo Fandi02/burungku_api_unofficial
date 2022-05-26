@@ -16,11 +16,11 @@ $app->get('/', function (Request $request, Response $response) {
     return $response;
 });
 
-//jenisburung
-require __DIR__ . '/../routes/jenis_burung.php';
+//eo
+require __DIR__ . '/../routes/eo.php';
 
-//Data_bank
-require __DIR__ . '/../routes/data_bank.php';
+//jenis burung
+require __DIR__ . '/../routes/jenis_burung.php';
 
 //event
 require __DIR__ . '/../routes/event.php';
@@ -28,26 +28,17 @@ require __DIR__ . '/../routes/event.php';
 //lokasi
 require __DIR__ . '/../routes/lokasi.php';
 
-//book tiket
-require __DIR__ . '/../routes/book_tiket.php';
-
 //transaksi
 require __DIR__ . '/../routes/transaksi.php';
-
-//peserta
-require __DIR__ . '/../routes/peserta.php';
-
-//alamat
-require __DIR__ . '/../routes/alamat.php';
 
 //profil
 require __DIR__ . '/../routes/profil.php';
 
-//auth
-require __DIR__ . '/../routes/auth.php';
+//admin
+require __DIR__ . '/../routes/admin.php';
 
-//Jenis Lomba
-require __DIR__ . '/../routes/jenis_lomba.php';
+//user
+require __DIR__ . '/../routes/user.php';
 
 $app->add(function ($req, $res, $next) {
     $response = $next($req, $res);

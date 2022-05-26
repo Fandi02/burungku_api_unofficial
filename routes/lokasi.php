@@ -65,12 +65,13 @@ $app->group('/lokasi', function(\Slim\Routing\RouteCollectorProxy $app){
   //route post by id
   $app->post('/add', function (Request $request, Response $response, array $args) {
     $id = create_guid();
-    $kota = $request->getParam('kota');
-    $longitude = $request->getParam('longitude');
-    $latitude = $request->getParam('latitude');
+    $kota_id = $request->getParam('kota_id');
+    $longitut = $request->getParam('longitut');
+    $latitut = $request->getParam('latitut');
+    $alamat = $request->getParam('alamat');
 
-    $sql = "INSERT INTO lokasi (id, kota, longitude, latitude) 
-            VALUES (:id, :kota, :longitude, :latitude)";
+    $sql = "INSERT INTO lokasi (id, kota_id, longitut, latitut, alamat) 
+            VALUES (:id, :kota_id, :longitut, :latitut, :alamat)";
 
     try {
         $db = new db();
@@ -78,9 +79,10 @@ $app->group('/lokasi', function(\Slim\Routing\RouteCollectorProxy $app){
 
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':kota', $kota);
-        $stmt->bindParam(':longitude', $longitude);
-        $stmt->bindParam(':latitude', $latitude);
+        $stmt->bindParam(':kota_id', $kota_id);
+        $stmt->bindParam(':longitut', $longitut);
+        $stmt->bindParam(':latitut', $latitut);
+        $stmt->bindParam(':alamat', $alamat);
 
         $result = $stmt->execute();
 
@@ -133,18 +135,19 @@ $app->group('/lokasi', function(\Slim\Routing\RouteCollectorProxy $app){
   });
 
   //route update by id   
-    $app->put('/update/{id}',function (Request $request, Response $response, array $args) 
-    {
+    $app->put('/update/{id}',function (Request $request, Response $response, array $args) {
         $id = $request->getAttribute('id');
         $data = $request->getParsedBody();
-        $kota = $data["kota"];
-        $longitude = $data["longitude"];
-        $latitude = $data["latitude"];
+        $kota_id = $data["kota_id"];
+        $longitut = $data["longitut"];
+        $latitut = $data["latitut"];
+        $alamat = $data["alamat"];
 
         $sql = "UPDATE lokasi SET
-            kota = '$kota',
-            longitude = '$longitude',
-            latitude = '$latitude'
+            kota_id = '$kota_id',
+            longitut = '$longitut',
+            latitut = '$latitut',
+            alamat = '$alamat'
             WHERE id = '$id'";
 
         try {
@@ -153,9 +156,10 @@ $app->group('/lokasi', function(\Slim\Routing\RouteCollectorProxy $app){
     
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':id', $id);
-            $stmt->bindParam(':kota', $kota);
-            $stmt->bindParam(':longitude', $longitude);
-            $stmt->bindParam(':latitude', $latitude);
+            $stmt->bindParam(':kota_id', $kota_id);
+            $stmt->bindParam(':longitut', $longitut);
+            $stmt->bindParam(':latitut', $latitut);
+            $stmt->bindParam(':alamat', $alamat);
 
             $result = $stmt->execute();
 
