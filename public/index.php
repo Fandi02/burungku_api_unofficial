@@ -40,12 +40,12 @@ require __DIR__ . '/../routes/admin.php';
 //user
 require __DIR__ . '/../routes/user.php';
 
-// $app->add(function ($req, $res, $next) {
-//     $response = $next($req, $res);
-//     return $response
-//             ->withHeader('Access-Control-Allow-Origin', 'http://localhost:5000')
-//             ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-//             ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-// });
+$app->add(function ($req, $res, $next) {
+    $response = $next($req, $res);
+    return $response
+            ->withHeader('Access-Control-Allow-Origin', 'http://localhost:5000')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
+});
 
 $app->run();
