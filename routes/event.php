@@ -9,6 +9,7 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
   $app->get('', function (Request $request, Response $response, $args) {
       $sql = "SELECT * FROM eventlokasi 
             join lokasi ON lokasi.id = eventlokasi.lokasi_id
+            join kota ON kota.id = lokasi.kota_id
             join event ON event.id = eventlokasi.event_id";
         
       try {
@@ -40,7 +41,8 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
     $id = $args['id'];
     $sql = "SELECT * FROM `eventlokasi` 
             join lokasi ON lokasi.id = eventlokasi.lokasi_id
-            join event ON event.id = eventlokasi.event_id 
+            join event ON event.id = eventlokasi.event_id
+            join kota ON kota.id = lokasi.kota_id 
             WHERE eventlokasi.id = '$id'";
 
     try {
@@ -418,5 +420,63 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
             ->withHeader('content-type', 'application/json')
             ->withStatus(500);
         }
-    }); 
+    });
+    
+    //route post eventlokasi
+    $app->post('/full/add', function (Request $request, Response $response, array $args) {
+        $id = create_guid();
+        $nama = $request->getParam('nama');
+        $deskripsi = $request->getParam('deskripsi');
+        $tgl = $request->getParam('tgl');
+        $jam = $request->getParam('jam');
+        $jml_tiket = $request->getParam('jml_tiket');
+        $jml_sesi = $request->getParam('jml_sesi');
+        $harga = $request->getParam('harga');
+        $aturan = $request->getParam('aturan');
+        $jenisburung_id = $request->getParam('jenisburung_id');
+        $jml_kol = $request->getParam('jml_kol');
+        $jml_baris = $request->getParam('jml_baris');
+    
+        $sql = "INSERT INTO `event` (`id`, `nama`, `tgl`, `jam`, `deskripsi`, 
+        `jml_kol`, `jml_baris`, `jml_tiket`, `jml_sesi`, `harga`, `aturan`, `jenisburung_id`) 
+        VALUES (:id, :nama, :tgl, :jam, :deskripsi, :jml_kol, :jml_baris, :jml_tiket,
+        :jml_sesi, :harga, :aturan, :jenisburung_id)";
+    
+        try {
+            $db = new db();
+            $db = $db->connect();
+    
+            $stmt = $db->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':nama', $nama);
+            $stmt->bindParam(':deskripsi', $deskripsi);
+            $stmt->bindParam(':tgl', $tgl);
+            $stmt->bindParam(':jam', $jam);
+            $stmt->bindParam(':jml_tiket', $jml_tiket);
+            $stmt->bindParam(':jml_sesi', $jml_sesi);
+            $stmt->bindParam(':harga', $harga);
+            $stmt->bindParam(':aturan', $aturan);
+            $stmt->bindParam(':jenisburung_id', $jenisburung_id);
+            $stmt->bindParam(':jml_kol', $jml_kol);
+            $stmt->bindParam(':jml_baris', $jml_baris);
+    
+            $result = $stmt->execute();
+    
+            $db = null;
+            $response->getBody()->write(json_encode($result));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        } catch(PDOException $e) {
+            $error = array(
+                'Message' => $e->getMessage()
+            );
+    
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(500);
+        }
+    });
+    
 });

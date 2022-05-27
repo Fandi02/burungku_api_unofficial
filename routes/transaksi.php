@@ -33,6 +33,47 @@ $app->group('/transaksi', function(\Slim\Routing\RouteCollectorProxy $app){
       }
   });
 
+  //route cek tiket
+  $app->get('/cek/{event_id}', function (Request $request, Response $response,array $args) {
+    $event_id = $args['event_id'];
+
+    $sql = "SELECT COUNT(user_id) jml_tiket 
+            FROM transaksi WHERE event_id = '$event_id'";
+
+    $jml_tiket = "SELECT jml_tiket FROM event WHERE id = '$event_id'";
+
+    try {
+        $db = new db();
+        $db = $db->connect();
+
+        $db = null;
+
+        if($sql < $jml_tiket){
+            $print = "tersedia";
+            $response->getBody()->write(json_encode($print));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        }else{
+            $print = "tidak tersedia";
+            $response->getBody()->write(json_encode($print));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+        }
+        
+    } catch(PDOException $e) {
+        $error = array(
+            'Message' => $e->getMessage()
+        );
+
+        $response->getBody()->write(json_encode($error));
+        return $response
+            ->withHeader('content-type', 'application/json')
+            ->withStatus(500);
+        }
+});
+
     //route by user
     $app->get('/user/{id}', function (Request $request, Response $response, array $args) {
         $id = $args['id'];
@@ -65,6 +106,7 @@ $app->group('/transaksi', function(\Slim\Routing\RouteCollectorProxy $app){
     });
 
   //route get by id
+
   $app->get('/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
     $sql = "SELECT * FROM `transaksi` WHERE id = '$id'";
