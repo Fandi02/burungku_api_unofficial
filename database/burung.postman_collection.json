@@ -1,0 +1,1035 @@
+{
+	"info": {
+		"_postman_id": "2e938a88-de67-4767-aa23-ad13b316e041",
+		"name": "burung",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21146189"
+	},
+	"item": [
+		{
+			"name": "event",
+			"item": [
+				{
+					"name": "get all event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/event",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"event"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get event by eo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"eo@eo.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/event/eo/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"event",
+								"eo",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/event/53924253-B15D-0E1D-9B79-95507BD7585E",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"event",
+								"53924253-B15D-0E1D-9B79-95507BD7585E"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nama\": \"gantangan\",\r\n        \"tgl\": \"2022-05-01\",\r\n        \"jam\": \"13:58:00\",\r\n        \"deskripsi\": \"gantangan\",\r\n        \"jml_kol\": 2,\r\n        \"jml_baris\": 2,\r\n        \"jml_tiket\": 2,\r\n        \"jml_sesi\": 2,\r\n        \"harga\": 1000,\r\n        \"aturan\": \"akeh pokok e\",\r\n        \"jenisburung_id\": \"c2eebd33-5421-43c3-901f-cf535d94e81e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/event/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"event",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add eventlokasi",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"event_id\":\"f644db7b-dcae-11ec-8b64-c0185038215b\",\r\n    \"lokasi_id\":\"69f4a067-dca5-11ec-8b64-c0185038215b\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/event/evlok/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"event",
+								"evlok",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by lokasi untuk user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/event/lokasi/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"event",
+								"lokasi",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by nama untuk user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/event/nama/gantangan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"event",
+								"nama",
+								"gantangan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get nama nama event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/event/nama",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"event",
+								"nama"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/event/search/lom",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"event",
+								"search",
+								"lom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update event",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"nama\": \"gantangan\",\r\n        \"tgl\": \"2022-05-01\",\r\n        \"jam\": \"13:58:00\",\r\n        \"deskripsi\": \"gantangan\",\r\n        \"jml_kol\": 3,\r\n        \"jml_baris\": 3,\r\n        \"jml_tiket\": 3,\r\n        \"jml_sesi\": 3,\r\n        \"harga\": 1000,\r\n        \"aturan\": \"akeh ws\",\r\n        \"jenisburung_id\": \"c2eebd33-5421-43c3-901f-cf535d94e81e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/event/update/f644db7b-dcae-11ec-8b64-c0185038215b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"event",
+								"update",
+								"f644db7b-dcae-11ec-8b64-c0185038215b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete event",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/event/delete/f644db7b-dcae-11ec-8b64-c0185038215b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"event",
+								"delete",
+								"f644db7b-dcae-11ec-8b64-c0185038215b"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "profil",
+			"item": [
+				{
+					"name": "get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/profil",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"profil"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get eo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/profil/eo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"profil",
+								"eo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update alamat",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"jkel\":\"0\",\r\n    \"alamat\":\"bandung\",\r\n    \"no_hp\":\"0999999\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/profil/update/0B08D2D6-2763-87AA-67A1-FB01DFFED25F",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"profil",
+								"update",
+								"0B08D2D6-2763-87AA-67A1-FB01DFFED25F"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get profile user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/profil/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"profil",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get profile by id user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/profil/05abedd0-dcca-11ec-8b64-c0185038215b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"profil",
+								"05abedd0-dcca-11ec-8b64-c0185038215b"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "delete eo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"eo2@eo.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/admin/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"admin",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "konfirmasi",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"f@f.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/admin/confirm",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"admin",
+								"confirm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login admin",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"admin@admin.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/admin/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"admin",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/admin/logout/31E750F0-1E17-80CE-6A46-4530B6489FC5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"admin",
+								"logout",
+								"31E750F0-1E17-80CE-6A46-4530B6489FC5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "regis",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"a@a.com\",\r\n    \"nama\" : \"fajar\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/user/register/google",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"user",
+								"register",
+								"google"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/user/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verifikasi",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"fajar_18520003@stimata.ac.id\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/user/verify/27279",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"user",
+								"verify",
+								"27279"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"fajar_18520003@stimata.ac.id\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/user/logout/371F8E95-C601-39A3-98EC-1CA28D58CE83",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"user",
+								"logout",
+								"371F8E95-C601-39A3-98EC-1CA28D58CE83"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "eo",
+			"item": [
+				{
+					"name": "regis google",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"f@f.com\",\r\n    \"nama\":\"f\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/eo/register/google",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"eo",
+								"register",
+								"google"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login google",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"f@f.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/eo/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"eo",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all eo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/eo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"eo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout ",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/eo/logout/BEAF6BBB-9A6F-697F-1AA7-DAA960FBC4C6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"eo",
+								"logout",
+								"BEAF6BBB-9A6F-697F-1AA7-DAA960FBC4C6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "jenis burung",
+			"item": [
+				{
+					"name": "add jenis burung",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nama\":\"kenari\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/jenisBurung/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"jenisBurung",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/jenisBurung",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"jenisBurung"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "lokasi",
+			"item": [
+				{
+					"name": "get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/lokasi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"lokasi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/lokasi/69f4a067-dca5-11ec-8b64-c0185038215b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"lokasi",
+								"69f4a067-dca5-11ec-8b64-c0185038215b"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add lokasi",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"kota_id\": 1,\r\n    \"latitut\": \"00009\",\r\n    \"longitut\": \"00999\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/lokasi/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"lokasi",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update lokasi by id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"latitut\":\"111111\",\r\n    \"longitut\":\"11111\",\r\n    \"kota_id\":1,\r\n    \"alamat\": \"cisitu\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/lokasi/update/B469F27C-04A4-0DEE-6B15-3A6BFD152A36",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"lokasi",
+								"update",
+								"B469F27C-04A4-0DEE-6B15-3A6BFD152A36"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/lokasi/delete/B469F27C-04A4-0DEE-6B15-3A6BFD152A36",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"lokasi",
+								"delete",
+								"B469F27C-04A4-0DEE-6B15-3A6BFD152A36"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transaksi",
+			"item": [
+				{
+					"name": "get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/transaksi",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"transaksi"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"user_id\": \"0B08D2D6-2763-87AA-67A1-FB01DFFED25F\",\r\n        \"event_id\": \"f644db7b-dcae-11ec-8b64-c0185038215b\",\r\n        \"no_kursi\": 2,\r\n        \"metode_pembayaran\": \"on the sport\",\r\n        \"sesi\": 2\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/transaksi/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"transaksi",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list booking tiket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/transaksi/user/0B08D2D6-2763-87AA-67A1-FB01DFFED25F",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"transaksi",
+								"user",
+								"0B08D2D6-2763-87AA-67A1-FB01DFFED25F"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cek pendaftar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/transaksi/cek/f644db7b-dcae-11ec-8b64-c0185038215b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"transaksi",
+								"cek",
+								"f644db7b-dcae-11ec-8b64-c0185038215b"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

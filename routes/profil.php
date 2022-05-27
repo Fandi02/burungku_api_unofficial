@@ -38,7 +38,7 @@ $app->group('/profil', function(\Slim\Routing\RouteCollectorProxy $app){
     $app->get('/eo', function (Request $request, Response $response, $args) {
         $sql = "SELECT * FROM `profile` 
                 join user ON profile.user_id = user.id
-                WHERE user.role = 2";
+                WHERE user.role = 1";
     
         try {
             $db = new db();
@@ -64,33 +64,65 @@ $app->group('/profil', function(\Slim\Routing\RouteCollectorProxy $app){
         }
     });
 
+    //route by eo
+    $app->get('/user', function (Request $request, Response $response, $args) {
+            $sql = "SELECT * FROM `profile` 
+                    join user ON profile.user_id = user.id
+                    WHERE user.role = 2";
+        
+            try {
+                $db = new db();
+                $db = $db->connect();
+        
+                $stmt = $db->query($sql);
+                $databankid = $stmt->fetch(PDO::FETCH_OBJ);
+        
+                $db = null;
+                $response->getBody()->write(json_encode($databankid));
+                return $response
+                    ->withHeader('content-type', 'application/json')
+                    ->withStatus(200);
+            } catch(PDOException $e) {
+                $error = array(
+                    'Message' => $e->getMessage()
+                );
+        
+                $response->getBody()->write(json_encode($error));
+                return $response
+                    ->withHeader('content-type', 'application/json')
+                    ->withStatus(500);
+            }
+    });
+
     //route get by id
     $app->get('/{id}', function (Request $request, Response $response, array $args) {
-        $id = $args['id'];
-        $sql = "SELECT * FROM `profile` WHERE id = '$id'";
-
-        try {
-        $db = new db();
-        $db = $db->connect();
-
-        $stmt = $db->query($sql);
-        $databankid = $stmt->fetch(PDO::FETCH_OBJ);
-
-        $db = null;
-        $response->getBody()->write(json_encode($databankid));
-        return $response
-            ->withHeader('content-type', 'application/json')
-            ->withStatus(200);
-        } catch(PDOException $e) {
-        $error = array(
-            'Message' => $e->getMessage()
-        );
-
-        $response->getBody()->write(json_encode($error));
-        return $response
-            ->withHeader('content-type', 'application/json')
-            ->withStatus(500);
-        }
+            $id = $args['id'];
+            $sql = "SELECT * FROM `profile` p 
+                    JOIN user u ON u.id = p.user_id
+                    WHERE u.id = '$id'";
+    
+            try {
+            $db = new db();
+            $db = $db->connect();
+    
+            $stmt = $db->query($sql);
+            $databankid = $stmt->fetch(PDO::FETCH_OBJ);
+    
+            $db = null;
+            $response->getBody()->write(json_encode($databankid));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(200);
+            } catch(PDOException $e) {
+            $error = array(
+                'Message' => $e->getMessage()
+            );
+    
+            $response->getBody()->write(json_encode($error));
+            return $response
+                ->withHeader('content-type', 'application/json')
+                ->withStatus(500);
+            }
     });
 
     //route delete by id
