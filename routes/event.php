@@ -7,11 +7,12 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
   //route get
   $app->get('', function (Request $request, Response $response, $args) {
-      $sql = "SELECT * FROM eventlokasi 
-            join lokasi ON lokasi.id = eventlokasi.lokasi_id
-            join kota ON kota.id = lokasi.kota_id
-            join event ON event.id = eventlokasi.event_id";
-        
+      $sql = "SELECT el.id id_eventlokaksi, e.id event_id, e.nama nama_event, 
+            k.nama kota, e.harga, e.tgl FROM eventlokasi el
+            join event e ON e.id = el.event_id 
+            join lokasi l ON l.id = el.lokasi_id
+            join kota k ON k.id = l.kota_id";
+
       try {
           $db = new db();
           $db = $db->connect();
@@ -39,21 +40,33 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
   //route get by id
   $app->get('/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
-    $sql = "SELECT * FROM `eventlokasi` 
-            join lokasi ON lokasi.id = eventlokasi.lokasi_id
-            join event ON event.id = eventlokasi.event_id
-            join kota ON kota.id = lokasi.kota_id 
-            WHERE eventlokasi.id = '$id'";
+    $sql = "SELECT el.id id_eventlok, e.nama nama_lomba, e.tgl tgl_lomba,
+            k.nama kota, e.jml_tiket, e.deskripsi, e.aturan
+            FROM `eventlokasi` el
+            join lokasi l ON l.id = el.lokasi_id
+            join kota k ON k.id = l.kota_id
+            join event e ON e.id = el.event_id
+            WHERE el.id = '$id'";
+
+    $sesi = "SELECT s.id, s.no, s.jam_start, s.jam_end From sesi s
+            JOIN event e on e.id = s.id_event
+            JOIN eventlokasi el on el.event_id = e.id
+            WHERE el.id = '$id'";
 
     try {
         $db = new db();
         $db = $db->connect();
 
         $stmt = $db->query($sql);
-        $eventid = $stmt->fetch(PDO::FETCH_OBJ);
+        $event = $stmt->fetch(PDO::FETCH_OBJ);
+
+        $stmt1 = $db->query($sesi);
+        $sesi = $stmt1->fetchAll(PDO::FETCH_OBJ);
+
+        $event->sesi = $sesi;
 
         $db = null;
-        $response->getBody()->write(json_encode($eventid));
+        $response->getBody()->write(json_encode($event));
         return $response
             ->withHeader('content-type', 'application/json')
             ->withStatus(200);
@@ -134,6 +147,7 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
     }
   });
 
+    //route get event by nama
   $app->group('/nama', function(\Slim\Routing\RouteCollectorProxy $app){
     // get nama - nama event
     // $app->get('', function (Request $request, Response $response, $args) {
@@ -242,11 +256,19 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
     $jenisburung_id = $request->getParam('jenisburung_id');
     $jml_kol = $request->getParam('jml_kol');
     $jml_baris = $request->getParam('jml_baris');
+    $tgl_start = $request->getParam('tgl_start');
+    $jam_start = $request->getParam('jam_start');
+    $tgl_end = $request->getParam('tgl_end');
+    $jam_end = $request->getParam('jam_end');
 
     $sql = "INSERT INTO `event` (`id`, `nama`, `tgl`, `jam`, `deskripsi`, 
-    `jml_kol`, `jml_baris`, `jml_tiket`, `jml_sesi`, `harga`, `aturan`, `jenisburung_id`) 
-    VALUES (:id, :nama, :tgl, :jam, :deskripsi, :jml_kol, :jml_baris, :jml_tiket,
-    :jml_sesi, :harga, :aturan, :jenisburung_id)";
+            `jml_kol`, `jml_baris`, `jml_tiket`, `jml_sesi`, `harga`, `aturan`, `jenisburung_id`, 
+            `tgl_start`, `jam_start`, `tgl_end`, `jam_end`) 
+            VALUES (:id, :nama, :tgl, :jam, :deskripsi, :jml_kol, :jml_baris, :jml_tiket,
+            :jml_sesi, :harga, :aturan, :jenisburung_id , :tgl_start, :jam_start, :tgl_end, :jam_end)";
+
+    $sesi = "INSERT INTO 'sesi' (id, no, jam_start, jam_end)
+            VALUES (:id, :no, :jam_start, :jam_end)";
 
     try {
         $db = new db();
@@ -265,6 +287,10 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
         $stmt->bindParam(':jenisburung_id', $jenisburung_id);
         $stmt->bindParam(':jml_kol', $jml_kol);
         $stmt->bindParam(':jml_baris', $jml_baris);
+        $stmt->bindParam(':tgl_start', $tgl_start);
+        $stmt->bindParam(':jam_start', $jam_start);
+        $stmt->bindParam(':tgl_end', $tgl_end);
+        $stmt->bindParam(':jam_end', $jam_end);
 
         $result = $stmt->execute();
 
@@ -369,6 +395,10 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
         $jenislomba_id = $request->getParam('jenislomba_id');
         $jml_kol = $request->getParam('jml_kol');
         $jml_baris = $request->getParam('jml_baris');
+        $tgl_start = $request->getParam('tgl_start');
+        $jam_start = $request->getParam('jam_start');
+        $tgl_end = $request->getParam('tgl_end');
+        $jam_end = $request->getParam('jam_end');
 
         $sql = "UPDATE event SET
             nama = '$nama',
@@ -381,7 +411,11 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
             jenisburung_id = '$jenisburung_id',
             jam = '$jam',
             jml_kol = '$jml_kol',
-            jml_baris = '$jml_baris'
+            jml_baris = '$jml_baris',
+            tgl_start = '$tgl_start',
+            jam_start = '$jam_start',
+            tgl_end = '$tgl_end',
+            jam_end = '$jam_end'
             WHERE id = '$id'";
 
         try {
@@ -401,6 +435,10 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
             $stmt->bindParam('jenisburung_id', $jenisburung_id);
             $stmt->bindParam('jml_kol', $Jml_kol);
             $stmt->bindParam('jml_baris', $jml_baris);
+            $stmt->bindParam(':tgl_start', $tgl_start);
+            $stmt->bindParam(':jam_start', $jam_start);
+            $stmt->bindParam(':tgl_end', $tgl_end);
+            $stmt->bindParam(':jam_end', $jam_end);
 
             $result = $stmt->execute();
 
