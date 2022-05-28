@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: May 26, 2022 at 10:31 AM
+-- Generation Time: May 28, 2022 at 06:57 AM
 -- Server version: 5.7.33
 -- PHP Version: 7.4.19
 
@@ -36,22 +36,21 @@ CREATE TABLE `event` (
   `jml_kol` int(11) DEFAULT NULL,
   `jml_baris` int(11) DEFAULT NULL,
   `jml_tiket` int(11) DEFAULT NULL,
-  `jml_sesi` int(11) DEFAULT NULL,
   `harga` int(100) DEFAULT NULL,
   `aturan` text,
-  `jenisburung_id` char(36) NOT NULL
+  `jenisburung_id` char(36) NOT NULL,
+  `tgl_start` date DEFAULT NULL,
+  `tgl_end` date DEFAULT NULL,
+  `jam_start` time DEFAULT NULL,
+  `jam_end` time DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `event`
 --
 
-INSERT INTO `event` (`id`, `nama`, `tgl`, `jam`, `deskripsi`, `jml_kol`, `jml_baris`, `jml_tiket`, `jml_sesi`, `harga`, `aturan`, `jenisburung_id`) VALUES
-('485458BF-F57A-EB6A-22E4-0488DA6E1559', 'gantangan', '2022-05-01', '13:58:00', 'gantangan', 2, 2, 2, 2, 1000, 'akeh pokok e', 'c2eebd33-5421-43c3-901f-cf535d94e81e'),
-('d444db7b-dcae-11ec-8b64-c0185038215b', 'gantangan', '2022-05-01', '13:58:00', 'gantangan', 2, 2, 2, 2, 100000, 'akeh pokok e', 'c2eebd33-5421-43c3-901f-cf535d94e81e'),
-('d644db7b-dcae-11ec-8b64-c0185038215b', 'gantangan', '2022-05-01', '13:58:00', 'gantangan', 2, 2, 2, 2, 100000, 'akeh pokok e', 'c2eebd33-5421-43c3-901f-cf535d94e81e'),
-('f644db7b-dcae-11ec-8b64-c0185038215b', 'gantangan', '2022-05-01', '13:58:00', 'gantangan', 3, 3, 3, 3, 1000, 'akeh ws', 'c2eebd33-5421-43c3-901f-cf535d94e81e'),
-('F7E4DFC3-AE86-1C25-161C-4215F167634D', 'gantangan', '2022-05-01', '13:58:00', 'gantangan', 2, 2, 2, 2, 1000, 'akeh pokok e', 'c2eebd33-5421-43c3-901f-cf535d94e81e');
+INSERT INTO `event` (`id`, `nama`, `tgl`, `jam`, `deskripsi`, `jml_kol`, `jml_baris`, `jml_tiket`, `harga`, `aturan`, `jenisburung_id`, `tgl_start`, `tgl_end`, `jam_start`, `jam_end`) VALUES
+('3BA9499B-900F-0040-84EA-24549120AC03', 'gantangan', '2022-05-01', '13:58:00', 'gantangan', 2, 2, 2, 1000, 'akeh pokok e', '53746699-2226-C59E-46BA-AE68289D0FF3', '2022-05-26', '2022-05-30', '13:00:00', '13:01:00');
 
 -- --------------------------------------------------------
 
@@ -70,9 +69,7 @@ CREATE TABLE `eventlokasi` (
 --
 
 INSERT INTO `eventlokasi` (`id`, `event_id`, `lokasi_id`) VALUES
-('53924253-B15D-0E1D-9B79-95507BD7585E', 'f644db7b-dcae-11ec-8b64-c0185038215b', '69f4a067-dca5-11ec-8b64-c0185038215b'),
-('71D3FCD2-9BE5-E6D2-D15C-57CC78084FDB', 'f644db7b-dcae-11ec-8b64-c0185038215b', '69f4a067-dca5-11ec-8b64-c0185038215b'),
-('79E9DE52-771F-DF33-3A2B-6C1635E6F56A', 'f644db7b-dcae-11ec-8b64-c0185038215b', '69f4a067-dca5-11ec-8b64-c0185038215b');
+('7F95AC2F-600F-BFC1-C488-34328D316AE8', '3BA9499B-900F-0040-84EA-24549120AC03', '8AA11846-CEF9-7F75-F957-1FF500863252');
 
 -- --------------------------------------------------------
 
@@ -90,9 +87,7 @@ CREATE TABLE `jenisburung` (
 --
 
 INSERT INTO `jenisburung` (`id`, `nama`) VALUES
-('92607A37-6AE0-F53A-D70B-E087600B60C3', 'kenari'),
-('BB67441E-3976-3859-7BE4-6C1974A428DB', 'kenari'),
-('c2eebd33-5421-43c3-901f-cf535d94e81e', 'emprit');
+('53746699-2226-C59E-46BA-AE68289D0FF3', 'kenari');
 
 -- --------------------------------------------------------
 
@@ -131,8 +126,7 @@ CREATE TABLE `lokasi` (
 --
 
 INSERT INTO `lokasi` (`id`, `kota_id`, `alamat`, `latitut`, `longitut`) VALUES
-('69f4a067-dca5-11ec-8b64-c0185038215b', 1, 'cisitu', '00009', '00999'),
-('C0F14FF3-F4AD-601E-DB05-9E61BFEC0E92', 1, NULL, '00009', '00999');
+('8AA11846-CEF9-7F75-F957-1FF500863252', 1, NULL, '00009', '00999');
 
 -- --------------------------------------------------------
 
@@ -148,18 +142,27 @@ CREATE TABLE `profile` (
   `user_id` char(36) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `profile`
+-- Table structure for table `sesi`
 --
 
-INSERT INTO `profile` (`id`, `no_hp`, `alamat`, `jkel`, `user_id`) VALUES
-('1FB5F0F5-3340-F7D7-7B4F-9BFF32259C7F', '0999999', 'bandung', 0, '9AAA83C8-B50F-E4FA-7803-31E74081FAB4'),
-('4B550CFD-1CC7-9448-B601-32058B978A2C', NULL, NULL, NULL, '1EF90C69-12E1-4C32-88E5-8A99A3AFACDE'),
-('6F848023-8A1A-9155-795C-B4DB3E52052E', NULL, NULL, NULL, 'DB155FEA-0B91-0A2C-5E2B-18EA27F32279'),
-('7272b29c-dcca-11ec-8b64-c0185038215b', '09999', 'malang', 0, '05abedd0-dcca-11ec-8b64-c0185038215b'),
-('96150627-dcca-11ec-8b64-c0185038215b', '09999', 'suroboyo', 0, '17b6d169-dcca-11ec-8b64-c0185038215b'),
-('B5F82786-C8F6-6609-7F9B-F335019CBB9B', NULL, NULL, NULL, '0B08D2D6-2763-87AA-67A1-FB01DFFED25F'),
-('EFDC3432-213C-53A6-0DDE-AF3525F76773', NULL, NULL, NULL, '355C4F26-9CF5-3D4C-9A0B-54667D983004');
+CREATE TABLE `sesi` (
+  `id` char(36) NOT NULL,
+  `no` int(11) DEFAULT NULL,
+  `jam_start` time NOT NULL,
+  `jam_end` time NOT NULL,
+  `id_event` char(36) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sesi`
+--
+
+INSERT INTO `sesi` (`id`, `no`, `jam_start`, `jam_end`, `id_event`) VALUES
+('2cca2806-de35-11ec-8ee0-c0185038215b', 1, '09:00:00', '10:00:00', '3BA9499B-900F-0040-84EA-24549120AC03'),
+('2cca33ea-de35-11ec-8ee0-c0185038215b', 2, '10:00:00', '11:00:00', '3BA9499B-900F-0040-84EA-24549120AC03');
 
 -- --------------------------------------------------------
 
@@ -170,21 +173,21 @@ INSERT INTO `profile` (`id`, `no_hp`, `alamat`, `jkel`, `user_id`) VALUES
 CREATE TABLE `transaksi` (
   `id` char(36) NOT NULL,
   `user_id` char(36) NOT NULL,
-  `event_id` char(36) NOT NULL,
-  `no_kursi` int(11) NOT NULL,
-  `metode_pembayaran` varchar(50) NOT NULL,
-  `sesi` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL,
-  `tgl` datetime DEFAULT NULL
+  `eventlokasi_id` char(36) NOT NULL,
+  `no_kursi` int(11) DEFAULT NULL,
+  `metode_pembayaran` varchar(50) DEFAULT NULL,
+  `sesi` char(36) DEFAULT NULL,
+  `status` tinyint(1) DEFAULT NULL,
+  `tgl` datetime DEFAULT NULL,
+  `bukti` varchar(225) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `transaksi`
 --
 
-INSERT INTO `transaksi` (`id`, `user_id`, `event_id`, `no_kursi`, `metode_pembayaran`, `sesi`, `status`, `tgl`) VALUES
-('E7396382-582E-3FA1-3010-EF1864C85636', '0B08D2D6-2763-87AA-67A1-FB01DFFED25F', 'f644db7b-dcae-11ec-8b64-c0185038215b', 2, 'on the sport', 2, 1, NULL),
-('ef6af0aa-dcba-11ec-8b64-c0185038215b', '0B08D2D6-2763-87AA-67A1-FB01DFFED25F', 'f644db7b-dcae-11ec-8b64-c0185038215b', 2, 'on the sport', 1, 1, NULL);
+INSERT INTO `transaksi` (`id`, `user_id`, `eventlokasi_id`, `no_kursi`, `metode_pembayaran`, `sesi`, `status`, `tgl`, `bukti`) VALUES
+('63BA0B65-4AAA-484D-BB5F-4389536B00EE', 'a7868f1a-de41-11ec-8ee0-c0185038215b', '7F95AC2F-600F-BFC1-C488-34328D316AE8', 2, 'on the sport', '2cca33ea-de35-11ec-8ee0-c0185038215b', 1, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -198,23 +201,17 @@ CREATE TABLE `user` (
   `nama` varchar(50) NOT NULL,
   `role` int(2) NOT NULL,
   `is_verified` tinyint(1) NOT NULL,
-  `otp` int(5) DEFAULT NULL
+  `otp` int(5) DEFAULT NULL,
+  `no_hp` varchar(15) DEFAULT NULL,
+  `password` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `email`, `nama`, `role`, `is_verified`, `otp`) VALUES
-('05abedd0-dcca-11ec-8b64-c0185038215b', 'eo1@eo.com', 'eo1', 1, 1, NULL),
-('0B08D2D6-2763-87AA-67A1-FB01DFFED25F', 'fajar', 'fajar', 2, 0, 75574),
-('17b6d169-dcca-11ec-8b64-c0185038215b', 'eo2@eo.com', 'eo2', 1, 1, NULL),
-('1EF90C69-12E1-4C32-88E5-8A99A3AFACDE', 'f@f.com', 'f', 1, 1, NULL),
-('355C4F26-9CF5-3D4C-9A0B-54667D983004', 'a@a.com', 'fajar', 2, 0, 99545),
-('5dbed634-dcce-11ec-8b64-c0185038215b', 'admin@admin.com', 'admin', 0, 1, NULL),
-('9AAA83C8-B50F-E4FA-7803-31E74081FAB4', 'fhidayatulloh33@gmail.com', 'fajar', 2, 0, 60238),
-('B17644A3-34C0-B0AB-959A-FCFA53C95A4A', 'fajar_18520003@stimata.ac.id', 'fajar', 2, 1, 27279),
-('DB155FEA-0B91-0A2C-5E2B-18EA27F32279', 'f@f.com', 'f', 2, 0, NULL);
+INSERT INTO `user` (`id`, `email`, `nama`, `role`, `is_verified`, `otp`, `no_hp`, `password`) VALUES
+('a7868f1a-de41-11ec-8ee0-c0185038215b', 'user1@user.com', 'user', 2, 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -273,12 +270,20 @@ ALTER TABLE `profile`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Indexes for table `sesi`
+--
+ALTER TABLE `sesi`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_event` (`id_event`);
+
+--
 -- Indexes for table `transaksi`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `event_id` (`event_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `event_id` (`eventlokasi_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `sesi` (`sesi`);
 
 --
 -- Indexes for table `user`
@@ -323,11 +328,18 @@ ALTER TABLE `profile`
   ADD CONSTRAINT `profile_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
+-- Constraints for table `sesi`
+--
+ALTER TABLE `sesi`
+  ADD CONSTRAINT `sesi_ibfk_1` FOREIGN KEY (`id_event`) REFERENCES `event` (`id`);
+
+--
 -- Constraints for table `transaksi`
 --
 ALTER TABLE `transaksi`
-  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
-  ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`eventlokasi_id`) REFERENCES `eventlokasi` (`id`),
+  ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `transaksi_ibfk_3` FOREIGN KEY (`sesi`) REFERENCES `sesi` (`id`);
 
 --
 -- Constraints for table `usersecret`
