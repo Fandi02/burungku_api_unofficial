@@ -67,7 +67,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/event/53924253-B15D-0E1D-9B79-95507BD7585E",
+							"raw": "http://localhost:5000/event/7F95AC2F-600F-BFC1-C488-34328D316AE8",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -75,7 +75,7 @@
 							"port": "5000",
 							"path": [
 								"event",
-								"53924253-B15D-0E1D-9B79-95507BD7585E"
+								"7F95AC2F-600F-BFC1-C488-34328D316AE8"
 							]
 						}
 					},
@@ -88,7 +88,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"nama\": \"gantangan\",\r\n        \"tgl\": \"2022-05-01\",\r\n        \"jam\": \"13:58:00\",\r\n        \"deskripsi\": \"gantangan\",\r\n        \"jml_kol\": 2,\r\n        \"jml_baris\": 2,\r\n        \"jml_tiket\": 2,\r\n        \"jml_sesi\": 2,\r\n        \"harga\": 1000,\r\n        \"aturan\": \"akeh pokok e\",\r\n        \"jenisburung_id\": \"c2eebd33-5421-43c3-901f-cf535d94e81e\"\r\n}",
+							"raw": "{\r\n        \"nama\": \"gantangan\",\r\n        \"tgl\": \"2022-05-01\",\r\n        \"jam\": \"13:58:00\",\r\n        \"deskripsi\": \"gantangan\",\r\n        \"jml_kol\": 2,\r\n        \"jml_baris\": 2,\r\n        \"jml_tiket\": 2,\r\n        \"jml_sesi\": 2,\r\n        \"harga\": 1000,\r\n        \"aturan\": \"akeh pokok e\",\r\n        \"jenisburung_id\": \"53746699-2226-C59E-46BA-AE68289D0FF3\",\r\n        \"tgl_start\": \"2022-05-27\",\r\n        \"jam_start\": \"13:00:00\",\r\n        \"tgl_end\": \"2022-05-30\",\r\n        \"jam_end\": \"13:00:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -117,7 +117,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"event_id\":\"f644db7b-dcae-11ec-8b64-c0185038215b\",\r\n    \"lokasi_id\":\"69f4a067-dca5-11ec-8b64-c0185038215b\"\r\n}",
+							"raw": "{\r\n    \"event_id\":\"3BA9499B-900F-0040-84EA-24549120AC03\",\r\n    \"lokasi_id\":\"8AA11846-CEF9-7F75-F957-1FF500863252\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -230,7 +230,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"nama\": \"gantangan\",\r\n        \"tgl\": \"2022-05-01\",\r\n        \"jam\": \"13:58:00\",\r\n        \"deskripsi\": \"gantangan\",\r\n        \"jml_kol\": 3,\r\n        \"jml_baris\": 3,\r\n        \"jml_tiket\": 3,\r\n        \"jml_sesi\": 3,\r\n        \"harga\": 1000,\r\n        \"aturan\": \"akeh ws\",\r\n        \"jenisburung_id\": \"c2eebd33-5421-43c3-901f-cf535d94e81e\"\r\n}",
+							"raw": "{\r\n        \"nama\": \"gantangan\",\r\n        \"tgl\": \"2022-05-01\",\r\n        \"jam\": \"13:58:00\",\r\n        \"deskripsi\": \"gantangan\",\r\n        \"jml_kol\": 2,\r\n        \"jml_baris\": 2,\r\n        \"jml_tiket\": 2,\r\n        \"jml_sesi\": 2,\r\n        \"harga\": 1000,\r\n        \"aturan\": \"akeh pokok e\",\r\n        \"jenisburung_id\": \"53746699-2226-C59E-46BA-AE68289D0FF3\",\r\n        \"tgl_start\": \"2022-05-27\",\r\n        \"jam_start\": \"13:00:00\",\r\n        \"tgl_end\": \"2022-05-30\",\r\n        \"jam_end\": \"13:01:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -238,7 +238,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5000/event/update/f644db7b-dcae-11ec-8b64-c0185038215b",
+							"raw": "http://localhost:5000/event/update/3BA9499B-900F-0040-84EA-24549120AC03",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -247,7 +247,7 @@
 							"path": [
 								"event",
 								"update",
-								"f644db7b-dcae-11ec-8b64-c0185038215b"
+								"3BA9499B-900F-0040-84EA-24549120AC03"
 							]
 						}
 					},
@@ -951,10 +951,22 @@
 					"response": []
 				},
 				{
-					"name": "get by id",
+					"name": "get by id (get detail transaksi)",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/transaksi/63BA0B65-4AAA-484D-BB5F-4389536B00EE",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"transaksi",
+								"63BA0B65-4AAA-484D-BB5F-4389536B00EE"
+							]
+						}
 					},
 					"response": []
 				},
@@ -965,7 +977,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "    {\r\n        \"user_id\": \"0B08D2D6-2763-87AA-67A1-FB01DFFED25F\",\r\n        \"event_id\": \"f644db7b-dcae-11ec-8b64-c0185038215b\",\r\n        \"no_kursi\": 2,\r\n        \"metode_pembayaran\": \"on the sport\",\r\n        \"sesi\": 2\r\n    }",
+							"raw": "    {\r\n        \"user_id\": \"a7868f1a-de41-11ec-8ee0-c0185038215b\",\r\n        \"eventlokasi_id\": \"7F95AC2F-600F-BFC1-C488-34328D316AE8\",\r\n        \"sesi\": \"2cca33ea-de35-11ec-8ee0-c0185038215b\"\r\n    }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -988,12 +1000,12 @@
 					"response": []
 				},
 				{
-					"name": "list booking tiket",
+					"name": "list tiket by user id",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/transaksi/user/0B08D2D6-2763-87AA-67A1-FB01DFFED25F",
+							"raw": "http://localhost:5000/transaksi/user/a7868f1a-de41-11ec-8ee0-c0185038215b",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1002,19 +1014,19 @@
 							"path": [
 								"transaksi",
 								"user",
-								"0B08D2D6-2763-87AA-67A1-FB01DFFED25F"
+								"a7868f1a-de41-11ec-8ee0-c0185038215b"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "cek pendaftar",
+					"name": "cek kuota pendaftar",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:5000/transaksi/cek/f644db7b-dcae-11ec-8b64-c0185038215b",
+							"raw": "http://localhost:5000/transaksi/cek/kuota/3BA9499B-900F-0040-84EA-24549120AC03",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1023,9 +1035,156 @@
 							"path": [
 								"transaksi",
 								"cek",
-								"f644db7b-dcae-11ec-8b64-c0185038215b"
+								"kuota",
+								"3BA9499B-900F-0040-84EA-24549120AC03"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "cek tgl pendaftaran",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/transaksi/cek/tgl/3BA9499B-900F-0040-84EA-24549120AC03",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"transaksi",
+								"cek",
+								"tgl",
+								"3BA9499B-900F-0040-84EA-24549120AC03"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "konfirmasi",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"metode_pembayaran\" : \"on the sport\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/transaksi/konfirmasi/9824E747-3173-1FE0-FE50-7AA7F6D58B1B",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"transaksi",
+								"konfirmasi",
+								"9824E747-3173-1FE0-FE50-7AA7F6D58B1B"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload bukti pembayaran",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bukti\":\"bayar.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/transaksi/bukti/9824E747-3173-1FE0-FE50-7AA7F6D58B1B",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"transaksi",
+								"bukti",
+								"9824E747-3173-1FE0-FE50-7AA7F6D58B1B"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pilih metode pembayaran",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/transaksi/konfirmasi/9824E747-3173-1FE0-FE50-7AA7F6D58B1B",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"transaksi",
+								"konfirmasi",
+								"9824E747-3173-1FE0-FE50-7AA7F6D58B1B"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "batal",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/transaksi/batal/9824E747-3173-1FE0-FE50-7AA7F6D58B1B",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"transaksi",
+								"batal",
+								"9824E747-3173-1FE0-FE50-7AA7F6D58B1B"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "sesi",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
