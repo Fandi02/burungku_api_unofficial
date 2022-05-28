@@ -40,6 +40,9 @@ require __DIR__ . '/../routes/admin.php';
 //user
 require __DIR__ . '/../routes/user.php';
 
+//sesi
+require __DIR__ . '/../routes/sesi.php';
+
 $app->add(function ($req, $res, $next) {
     $response = $next($req, $res);
     return $response
