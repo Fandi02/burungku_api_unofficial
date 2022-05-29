@@ -4,7 +4,7 @@ class DB{
     private $host = 'localhost';
     private $user = 'root';
     private $pass = '';
-    private $dbname = 'burung';
+    private $dbname = 'kontes_burung';
 
     public function connect(){
         $dsn = 'mysql:host='.$this->host.';dbname='.$this->dbname;

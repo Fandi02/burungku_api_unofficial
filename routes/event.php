@@ -40,13 +40,13 @@ $app->group('/event', function(\Slim\Routing\RouteCollectorProxy $app){
   //route get by id
   $app->get('/{id}', function (Request $request, Response $response, array $args) {
     $id = $args['id'];
-    $sql = "SELECT el.id id_eventlok, e.nama nama_lomba, e.tgl tgl_lomba,
+    $sql = "SELECT e.id id, el.id id_eventlok, e.nama nama_lomba, e.tgl tgl_lomba,
             k.nama kota, e.jml_tiket, e.deskripsi, e.aturan
             FROM `eventlokasi` el
             join lokasi l ON l.id = el.lokasi_id
             join kota k ON k.id = l.kota_id
             join event e ON e.id = el.event_id
-            WHERE el.id = '$id'";
+            WHERE e.id = '$id'";
 
     $sesi = "SELECT s.id, s.no, s.jam_start, s.jam_end From sesi s
             JOIN event e on e.id = s.id_event
