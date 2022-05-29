@@ -43,9 +43,9 @@ require __DIR__ . '/../routes/user.php';
 //sesi
 require __DIR__ . '/../routes/sesi.php';
 
-//login oauth
-require __DIR__ . '/../routes/social-login.php';
-require __DIR__ . '/../routes/auth.php';
+// //login oauth
+// require __DIR__ . '/../routes/social-login.php';
+// require __DIR__ . '/../routes/auth.php';
 
 // $app->add(function ($req, $res, $next) {
 //     $response = $next($req, $res);
